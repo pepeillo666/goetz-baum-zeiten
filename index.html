@@ -1,0 +1,1504 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Götz & Baum · Arbeitszeiten Juni 2026</title>
+<style>
+  :root {
+    --bg:#f7f5ef;
+    --card:#ffffff;
+    --ink:#1f2933;
+    --muted:#667085;
+    --line:#e5e7eb;
+    --accent:#214d35;
+    --accent-dark:#143522;
+    --accent2:#d7b56d;
+    --input:#fff8db;
+    --danger:#b42318;
+  }
+  * { box-sizing:border-box; }
+  body {
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    -webkit-text-size-adjust:100%;
+  }
+  header {
+    position:sticky;
+    top:0;
+    z-index:20;
+    background:linear-gradient(135deg,var(--accent),var(--accent-dark));
+    color:white;
+    padding:12px 14px;
+    box-shadow:0 2px 12px rgba(0,0,0,.18);
+  }
+  .brand {
+    display:flex;
+    align-items:center;
+    gap:11px;
+  }
+  .logo {
+    width:44px;
+    height:44px;
+    border-radius:14px;
+    background:var(--accent2);
+    color:var(--accent-dark);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:900;
+    letter-spacing:-1px;
+    flex:0 0 auto;
+    box-shadow:inset 0 0 0 2px rgba(255,255,255,.35);
+  }
+  h1 {
+    margin:0;
+    font-size:18px;
+    line-height:1.1;
+  }
+  .sub {
+    margin-top:3px;
+    font-size:12px;
+    opacity:.92;
+  }
+  main {
+    width:100%;
+    max-width:720px;
+    margin:0 auto;
+    padding-bottom:28px;
+  }
+  .summary {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+    padding:12px;
+  }
+  .box {
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:12px;
+    box-shadow:0 1px 5px rgba(16,24,40,.06);
+  }
+  .label {
+    color:var(--muted);
+    font-size:12px;
+    margin-bottom:4px;
+  }
+  .value {
+    font-size:22px;
+    font-weight:850;
+    letter-spacing:-.3px;
+  }
+  .actions {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+    padding:0 12px 12px;
+  }
+  button {
+    appearance:none;
+    border:0;
+    border-radius:14px;
+    min-height:46px;
+    padding:11px 10px;
+    font-size:15px;
+    font-weight:800;
+    background:var(--accent);
+    color:white;
+    touch-action:manipulation;
+  }
+  button.secondary {
+    background:#ffffff;
+    color:var(--accent);
+    border:1px solid var(--line);
+  }
+  button.danger {
+    background:#fff;
+    color:var(--danger);
+    border:1px solid #fecdca;
+  }
+  .hint {
+    margin:0 12px 12px;
+    padding:10px 12px;
+    border-radius:14px;
+    background:#fff;
+    border:1px solid var(--line);
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.38;
+  }
+  .days {
+    padding:0 12px 22px;
+    display:grid;
+    gap:10px;
+  }
+  .day-card {
+    background:white;
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:12px;
+    box-shadow:0 1px 8px rgba(16,24,40,.07);
+  }
+  .day-head {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    padding-bottom:10px;
+    margin-bottom:10px;
+    border-bottom:1px solid var(--line);
+  }
+  .date {
+    font-size:17px;
+    font-weight:900;
+    color:#20392a;
+  }
+  .weekday {
+    font-size:13px;
+    color:var(--muted);
+    font-weight:700;
+    margin-top:2px;
+  }
+  .day-total {
+    min-width:76px;
+    text-align:right;
+    font-size:22px;
+    font-weight:950;
+    color:var(--accent);
+  }
+  .shift {
+    display:grid;
+    grid-template-columns:64px 1fr 1fr;
+    gap:8px;
+    align-items:end;
+    margin-top:8px;
+  }
+  .shift-title {
+    font-size:14px;
+    font-weight:900;
+    color:#20392a;
+    padding-bottom:12px;
+  }
+  label span {
+    display:block;
+    font-size:12px;
+    color:var(--muted);
+    font-weight:800;
+    margin:0 0 4px 2px;
+  }
+  input {
+    width:100%;
+    height:48px;
+    border:1px solid #e0cf7b;
+    border-radius:14px;
+    background:var(--input);
+    text-align:center;
+    font-size:20px;
+    font-weight:850;
+    color:#1f2933;
+    -webkit-appearance:none;
+    appearance:none;
+  }
+  input:focus {
+    outline:3px solid rgba(215,181,109,.38);
+    border-color:#b6923e;
+  }
+  input.invalid {
+    border-color:var(--danger);
+    background:#fff1f0;
+  }
+  .footer-total {
+    margin:0 12px 24px;
+    background:#20392a;
+    color:white;
+    border-radius:18px;
+    padding:16px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-weight:900;
+    box-shadow:0 2px 10px rgba(16,24,40,.12);
+  }
+  .footer-total span:last-child {
+    font-size:24px;
+  }
+  @media (max-width:380px) {
+    .summary,.actions {
+      grid-template-columns:1fr;
+    }
+    .shift {
+      grid-template-columns:58px 1fr 1fr;
+      gap:6px;
+    }
+    input {
+      height:46px;
+      font-size:18px;
+    }
+    .day-total {
+      font-size:20px;
+      min-width:66px;
+    }
+  }
+  @media print {
+    header,.actions,.hint { display:none; }
+    body { background:white; }
+    main { max-width:none; }
+    .day-card { break-inside:avoid; box-shadow:none; margin-bottom:6px; padding:8px; border-radius:10px; }
+    input { border:0; background:white; height:auto; font-size:12px; }
+    .footer-total { color:#000; background:white; border:1px solid #000; box-shadow:none; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <div class="logo">G&B</div>
+    <div>
+      <h1>Götz &amp; Baum</h1>
+      <div class="sub">Arbeitszeiten · Viernheim · Juni 2026</div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="summary">
+    <div class="box">
+      <div class="label">Monatsstunden</div>
+      <div class="value" id="monthTotal">0:00</div>
+    </div>
+    <div class="box">
+      <div class="label">Ausgefüllte Tage</div>
+      <div class="value" id="filledDays">0 / 30</div>
+    </div>
+  </section>
+
+  <section class="actions">
+    <button onclick="saveData()">Speichern</button>
+    <button class="secondary" onclick="exportCSV()">CSV exportieren</button>
+    <button class="secondary" onclick="window.print()">Als PDF speichern</button>
+    <button class="danger" onclick="clearAll()">Alles löschen</button>
+  </section>
+
+  <p class="hint">
+    Zeiten direkt antippen und z. B. <b>11:30</b>, <b>18:00</b> oder auch <b>1800</b> eintragen.
+    Die Daten werden automatisch auf dem iPhone gespeichert. Nachtschichten wie <b>18:00 bis 01:00</b> werden korrekt berechnet.
+  </p>
+
+  <section class="days">
+    
+<section class="day-card" data-date="2026-06-01">
+  <div class="day-head">
+    <div>
+      <div class="date">01.06.2026</div>
+      <div class="weekday">Mo</div>
+    </div>
+    <div class="day-total" data-field="total">0:00</div>
+  </div>
+
+  <div class="shift">
+    <div class="shift-title">Mittag</div>
+    <label>
+      <span>Start</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="11:30" data-field="m_start" aria-label="Mittag Start 01.06.">
+    </label>
+    <label>
+      <span>Ende</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="15:00" data-field="m_end" aria-label="Mittag Ende 01.06.">
+    </label>
+  </div>
+
+  <div class="shift">
+    <div class="shift-title">Abend</div>
+    <label>
+      <span>Start</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="18:00" data-field="a_start" aria-label="Abend Start 01.06.">
+    </label>
+    <label>
+      <span>Ende</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="23:30" data-field="a_end" aria-label="Abend Ende 01.06.">
+    </label>
+  </div>
+</section>
+
+
+<section class="day-card" data-date="2026-06-02">
+  <div class="day-head">
+    <div>
+      <div class="date">02.06.2026</div>
+      <div class="weekday">Di</div>
+    </div>
+    <div class="day-total" data-field="total">0:00</div>
+  </div>
+
+  <div class="shift">
+    <div class="shift-title">Mittag</div>
+    <label>
+      <span>Start</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="11:30" data-field="m_start" aria-label="Mittag Start 02.06.">
+    </label>
+    <label>
+      <span>Ende</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="15:00" data-field="m_end" aria-label="Mittag Ende 02.06.">
+    </label>
+  </div>
+
+  <div class="shift">
+    <div class="shift-title">Abend</div>
+    <label>
+      <span>Start</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="18:00" data-field="a_start" aria-label="Abend Start 02.06.">
+    </label>
+    <label>
+      <span>Ende</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="23:30" data-field="a_end" aria-label="Abend Ende 02.06.">
+    </label>
+  </div>
+</section>
+
+
+<section class="day-card" data-date="2026-06-03">
+  <div class="day-head">
+    <div>
+      <div class="date">03.06.2026</div>
+      <div class="weekday">Mi</div>
+    </div>
+    <div class="day-total" data-field="total">0:00</div>
+  </div>
+
+  <div class="shift">
+    <div class="shift-title">Mittag</div>
+    <label>
+      <span>Start</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="11:30" data-field="m_start" aria-label="Mittag Start 03.06.">
+    </label>
+    <label>
+      <span>Ende</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="15:00" data-field="m_end" aria-label="Mittag Ende 03.06.">
+    </label>
+  </div>
+
+  <div class="shift">
+    <div class="shift-title">Abend</div>
+    <label>
+      <span>Start</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="18:00" data-field="a_start" aria-label="Abend Start 03.06.">
+    </label>
+    <label>
+      <span>Ende</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="23:30" data-field="a_end" aria-label="Abend Ende 03.06.">
+    </label>
+  </div>
+</section>
+
+
+<section class="day-card" data-date="2026-06-04">
+  <div class="day-head">
+    <div>
+      <div class="date">04.06.2026</div>
+      <div class="weekday">Do</div>
+    </div>
+    <div class="day-total" data-field="total">0:00</div>
+  </div>
+
+  <div class="shift">
+    <div class="shift-title">Mittag</div>
+    <label>
+      <span>Start</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="11:30" data-field="m_start" aria-label="Mittag Start 04.06.">
+    </label>
+    <label>
+      <span>Ende</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="15:00" data-field="m_end" aria-label="Mittag Ende 04.06.">
+    </label>
+  </div>
+
+  <div class="shift">
+    <div class="shift-title">Abend</div>
+    <label>
+      <span>Start</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="18:00" data-field="a_start" aria-label="Abend Start 04.06.">
+    </label>
+    <label>
+      <span>Ende</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="23:30" data-field="a_end" aria-label="Abend Ende 04.06.">
+    </label>
+  </div>
+</section>
+
+
+<section class="day-card" data-date="2026-06-05">
+  <div class="day-head">
+    <div>
+      <div class="date">05.06.2026</div>
+      <div class="weekday">Fr</div>
+    </div>
+    <div class="day-total" data-field="total">0:00</div>
+  </div>
+
+  <div class="shift">
+    <div class="shift-title">Mittag</div>
+    <label>
+      <span>Start</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="11:30" data-field="m_start" aria-label="Mittag Start 05.06.">
+    </label>
+    <label>
+      <span>Ende</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="15:00" data-field="m_end" aria-label="Mittag Ende 05.06.">
+    </label>
+  </div>
+
+  <div class="shift">
+    <div class="shift-title">Abend</div>
+    <label>
+      <span>Start</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="18:00" data-field="a_start" aria-label="Abend Start 05.06.">
+    </label>
+    <label>
+      <span>Ende</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="23:30" data-field="a_end" aria-label="Abend Ende 05.06.">
+    </label>
+  </div>
+</section>
+
+
+<section class="day-card" data-date="2026-06-06">
+  <div class="day-head">
+    <div>
+      <div class="date">06.06.2026</div>
+      <div class="weekday">Sa</div>
+    </div>
+    <div class="day-total" data-field="total">0:00</div>
+  </div>
+
+  <div class="shift">
+    <div class="shift-title">Mittag</div>
+    <label>
+      <span>Start</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="11:30" data-field="m_start" aria-label="Mittag Start 06.06.">
+    </label>
+    <label>
+      <span>Ende</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="15:00" data-field="m_end" aria-label="Mittag Ende 06.06.">
+    </label>
+  </div>
+
+  <div class="shift">
+    <div class="shift-title">Abend</div>
+    <label>
+      <span>Start</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="18:00" data-field="a_start" aria-label="Abend Start 06.06.">
+    </label>
+    <label>
+      <span>Ende</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="23:30" data-field="a_end" aria-label="Abend Ende 06.06.">
+    </label>
+  </div>
+</section>
+
+
+<section class="day-card" data-date="2026-06-07">
+  <div class="day-head">
+    <div>
+      <div class="date">07.06.2026</div>
+      <div class="weekday">So</div>
+    </div>
+    <div class="day-total" data-field="total">0:00</div>
+  </div>
+
+  <div class="shift">
+    <div class="shift-title">Mittag</div>
+    <label>
+      <span>Start</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="11:30" data-field="m_start" aria-label="Mittag Start 07.06.">
+    </label>
+    <label>
+      <span>Ende</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="15:00" data-field="m_end" aria-label="Mittag Ende 07.06.">
+    </label>
+  </div>
+
+  <div class="shift">
+    <div class="shift-title">Abend</div>
+    <label>
+      <span>Start</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="18:00" data-field="a_start" aria-label="Abend Start 07.06.">
+    </label>
+    <label>
+      <span>Ende</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="23:30" data-field="a_end" aria-label="Abend Ende 07.06.">
+    </label>
+  </div>
+</section>
+
+
+<section class="day-card" data-date="2026-06-08">
+  <div class="day-head">
+    <div>
+      <div class="date">08.06.2026</div>
+      <div class="weekday">Mo</div>
+    </div>
+    <div class="day-total" data-field="total">0:00</div>
+  </div>
+
+  <div class="shift">
+    <div class="shift-title">Mittag</div>
+    <label>
+      <span>Start</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="11:30" data-field="m_start" aria-label="Mittag Start 08.06.">
+    </label>
+    <label>
+      <span>Ende</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="15:00" data-field="m_end" aria-label="Mittag Ende 08.06.">
+    </label>
+  </div>
+
+  <div class="shift">
+    <div class="shift-title">Abend</div>
+    <label>
+      <span>Start</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="18:00" data-field="a_start" aria-label="Abend Start 08.06.">
+    </label>
+    <label>
+      <span>Ende</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="23:30" data-field="a_end" aria-label="Abend Ende 08.06.">
+    </label>
+  </div>
+</section>
+
+
+<section class="day-card" data-date="2026-06-09">
+  <div class="day-head">
+    <div>
+      <div class="date">09.06.2026</div>
+      <div class="weekday">Di</div>
+    </div>
+    <div class="day-total" data-field="total">0:00</div>
+  </div>
+
+  <div class="shift">
+    <div class="shift-title">Mittag</div>
+    <label>
+      <span>Start</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="11:30" data-field="m_start" aria-label="Mittag Start 09.06.">
+    </label>
+    <label>
+      <span>Ende</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="15:00" data-field="m_end" aria-label="Mittag Ende 09.06.">
+    </label>
+  </div>
+
+  <div class="shift">
+    <div class="shift-title">Abend</div>
+    <label>
+      <span>Start</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="18:00" data-field="a_start" aria-label="Abend Start 09.06.">
+    </label>
+    <label>
+      <span>Ende</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="23:30" data-field="a_end" aria-label="Abend Ende 09.06.">
+    </label>
+  </div>
+</section>
+
+
+<section class="day-card" data-date="2026-06-10">
+  <div class="day-head">
+    <div>
+      <div class="date">10.06.2026</div>
+      <div class="weekday">Mi</div>
+    </div>
+    <div class="day-total" data-field="total">0:00</div>
+  </div>
+
+  <div class="shift">
+    <div class="shift-title">Mittag</div>
+    <label>
+      <span>Start</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="11:30" data-field="m_start" aria-label="Mittag Start 10.06.">
+    </label>
+    <label>
+      <span>Ende</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="15:00" data-field="m_end" aria-label="Mittag Ende 10.06.">
+    </label>
+  </div>
+
+  <div class="shift">
+    <div class="shift-title">Abend</div>
+    <label>
+      <span>Start</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="18:00" data-field="a_start" aria-label="Abend Start 10.06.">
+    </label>
+    <label>
+      <span>Ende</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="23:30" data-field="a_end" aria-label="Abend Ende 10.06.">
+    </label>
+  </div>
+</section>
+
+
+<section class="day-card" data-date="2026-06-11">
+  <div class="day-head">
+    <div>
+      <div class="date">11.06.2026</div>
+      <div class="weekday">Do</div>
+    </div>
+    <div class="day-total" data-field="total">0:00</div>
+  </div>
+
+  <div class="shift">
+    <div class="shift-title">Mittag</div>
+    <label>
+      <span>Start</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="11:30" data-field="m_start" aria-label="Mittag Start 11.06.">
+    </label>
+    <label>
+      <span>Ende</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="15:00" data-field="m_end" aria-label="Mittag Ende 11.06.">
+    </label>
+  </div>
+
+  <div class="shift">
+    <div class="shift-title">Abend</div>
+    <label>
+      <span>Start</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="18:00" data-field="a_start" aria-label="Abend Start 11.06.">
+    </label>
+    <label>
+      <span>Ende</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="23:30" data-field="a_end" aria-label="Abend Ende 11.06.">
+    </label>
+  </div>
+</section>
+
+
+<section class="day-card" data-date="2026-06-12">
+  <div class="day-head">
+    <div>
+      <div class="date">12.06.2026</div>
+      <div class="weekday">Fr</div>
+    </div>
+    <div class="day-total" data-field="total">0:00</div>
+  </div>
+
+  <div class="shift">
+    <div class="shift-title">Mittag</div>
+    <label>
+      <span>Start</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="11:30" data-field="m_start" aria-label="Mittag Start 12.06.">
+    </label>
+    <label>
+      <span>Ende</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="15:00" data-field="m_end" aria-label="Mittag Ende 12.06.">
+    </label>
+  </div>
+
+  <div class="shift">
+    <div class="shift-title">Abend</div>
+    <label>
+      <span>Start</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="18:00" data-field="a_start" aria-label="Abend Start 12.06.">
+    </label>
+    <label>
+      <span>Ende</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="23:30" data-field="a_end" aria-label="Abend Ende 12.06.">
+    </label>
+  </div>
+</section>
+
+
+<section class="day-card" data-date="2026-06-13">
+  <div class="day-head">
+    <div>
+      <div class="date">13.06.2026</div>
+      <div class="weekday">Sa</div>
+    </div>
+    <div class="day-total" data-field="total">0:00</div>
+  </div>
+
+  <div class="shift">
+    <div class="shift-title">Mittag</div>
+    <label>
+      <span>Start</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="11:30" data-field="m_start" aria-label="Mittag Start 13.06.">
+    </label>
+    <label>
+      <span>Ende</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="15:00" data-field="m_end" aria-label="Mittag Ende 13.06.">
+    </label>
+  </div>
+
+  <div class="shift">
+    <div class="shift-title">Abend</div>
+    <label>
+      <span>Start</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="18:00" data-field="a_start" aria-label="Abend Start 13.06.">
+    </label>
+    <label>
+      <span>Ende</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="23:30" data-field="a_end" aria-label="Abend Ende 13.06.">
+    </label>
+  </div>
+</section>
+
+
+<section class="day-card" data-date="2026-06-14">
+  <div class="day-head">
+    <div>
+      <div class="date">14.06.2026</div>
+      <div class="weekday">So</div>
+    </div>
+    <div class="day-total" data-field="total">0:00</div>
+  </div>
+
+  <div class="shift">
+    <div class="shift-title">Mittag</div>
+    <label>
+      <span>Start</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="11:30" data-field="m_start" aria-label="Mittag Start 14.06.">
+    </label>
+    <label>
+      <span>Ende</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="15:00" data-field="m_end" aria-label="Mittag Ende 14.06.">
+    </label>
+  </div>
+
+  <div class="shift">
+    <div class="shift-title">Abend</div>
+    <label>
+      <span>Start</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="18:00" data-field="a_start" aria-label="Abend Start 14.06.">
+    </label>
+    <label>
+      <span>Ende</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="23:30" data-field="a_end" aria-label="Abend Ende 14.06.">
+    </label>
+  </div>
+</section>
+
+
+<section class="day-card" data-date="2026-06-15">
+  <div class="day-head">
+    <div>
+      <div class="date">15.06.2026</div>
+      <div class="weekday">Mo</div>
+    </div>
+    <div class="day-total" data-field="total">0:00</div>
+  </div>
+
+  <div class="shift">
+    <div class="shift-title">Mittag</div>
+    <label>
+      <span>Start</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="11:30" data-field="m_start" aria-label="Mittag Start 15.06.">
+    </label>
+    <label>
+      <span>Ende</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="15:00" data-field="m_end" aria-label="Mittag Ende 15.06.">
+    </label>
+  </div>
+
+  <div class="shift">
+    <div class="shift-title">Abend</div>
+    <label>
+      <span>Start</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="18:00" data-field="a_start" aria-label="Abend Start 15.06.">
+    </label>
+    <label>
+      <span>Ende</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="23:30" data-field="a_end" aria-label="Abend Ende 15.06.">
+    </label>
+  </div>
+</section>
+
+
+<section class="day-card" data-date="2026-06-16">
+  <div class="day-head">
+    <div>
+      <div class="date">16.06.2026</div>
+      <div class="weekday">Di</div>
+    </div>
+    <div class="day-total" data-field="total">0:00</div>
+  </div>
+
+  <div class="shift">
+    <div class="shift-title">Mittag</div>
+    <label>
+      <span>Start</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="11:30" data-field="m_start" aria-label="Mittag Start 16.06.">
+    </label>
+    <label>
+      <span>Ende</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="15:00" data-field="m_end" aria-label="Mittag Ende 16.06.">
+    </label>
+  </div>
+
+  <div class="shift">
+    <div class="shift-title">Abend</div>
+    <label>
+      <span>Start</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="18:00" data-field="a_start" aria-label="Abend Start 16.06.">
+    </label>
+    <label>
+      <span>Ende</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="23:30" data-field="a_end" aria-label="Abend Ende 16.06.">
+    </label>
+  </div>
+</section>
+
+
+<section class="day-card" data-date="2026-06-17">
+  <div class="day-head">
+    <div>
+      <div class="date">17.06.2026</div>
+      <div class="weekday">Mi</div>
+    </div>
+    <div class="day-total" data-field="total">0:00</div>
+  </div>
+
+  <div class="shift">
+    <div class="shift-title">Mittag</div>
+    <label>
+      <span>Start</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="11:30" data-field="m_start" aria-label="Mittag Start 17.06.">
+    </label>
+    <label>
+      <span>Ende</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="15:00" data-field="m_end" aria-label="Mittag Ende 17.06.">
+    </label>
+  </div>
+
+  <div class="shift">
+    <div class="shift-title">Abend</div>
+    <label>
+      <span>Start</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="18:00" data-field="a_start" aria-label="Abend Start 17.06.">
+    </label>
+    <label>
+      <span>Ende</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="23:30" data-field="a_end" aria-label="Abend Ende 17.06.">
+    </label>
+  </div>
+</section>
+
+
+<section class="day-card" data-date="2026-06-18">
+  <div class="day-head">
+    <div>
+      <div class="date">18.06.2026</div>
+      <div class="weekday">Do</div>
+    </div>
+    <div class="day-total" data-field="total">0:00</div>
+  </div>
+
+  <div class="shift">
+    <div class="shift-title">Mittag</div>
+    <label>
+      <span>Start</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="11:30" data-field="m_start" aria-label="Mittag Start 18.06.">
+    </label>
+    <label>
+      <span>Ende</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="15:00" data-field="m_end" aria-label="Mittag Ende 18.06.">
+    </label>
+  </div>
+
+  <div class="shift">
+    <div class="shift-title">Abend</div>
+    <label>
+      <span>Start</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="18:00" data-field="a_start" aria-label="Abend Start 18.06.">
+    </label>
+    <label>
+      <span>Ende</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="23:30" data-field="a_end" aria-label="Abend Ende 18.06.">
+    </label>
+  </div>
+</section>
+
+
+<section class="day-card" data-date="2026-06-19">
+  <div class="day-head">
+    <div>
+      <div class="date">19.06.2026</div>
+      <div class="weekday">Fr</div>
+    </div>
+    <div class="day-total" data-field="total">0:00</div>
+  </div>
+
+  <div class="shift">
+    <div class="shift-title">Mittag</div>
+    <label>
+      <span>Start</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="11:30" data-field="m_start" aria-label="Mittag Start 19.06.">
+    </label>
+    <label>
+      <span>Ende</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="15:00" data-field="m_end" aria-label="Mittag Ende 19.06.">
+    </label>
+  </div>
+
+  <div class="shift">
+    <div class="shift-title">Abend</div>
+    <label>
+      <span>Start</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="18:00" data-field="a_start" aria-label="Abend Start 19.06.">
+    </label>
+    <label>
+      <span>Ende</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="23:30" data-field="a_end" aria-label="Abend Ende 19.06.">
+    </label>
+  </div>
+</section>
+
+
+<section class="day-card" data-date="2026-06-20">
+  <div class="day-head">
+    <div>
+      <div class="date">20.06.2026</div>
+      <div class="weekday">Sa</div>
+    </div>
+    <div class="day-total" data-field="total">0:00</div>
+  </div>
+
+  <div class="shift">
+    <div class="shift-title">Mittag</div>
+    <label>
+      <span>Start</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="11:30" data-field="m_start" aria-label="Mittag Start 20.06.">
+    </label>
+    <label>
+      <span>Ende</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="15:00" data-field="m_end" aria-label="Mittag Ende 20.06.">
+    </label>
+  </div>
+
+  <div class="shift">
+    <div class="shift-title">Abend</div>
+    <label>
+      <span>Start</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="18:00" data-field="a_start" aria-label="Abend Start 20.06.">
+    </label>
+    <label>
+      <span>Ende</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="23:30" data-field="a_end" aria-label="Abend Ende 20.06.">
+    </label>
+  </div>
+</section>
+
+
+<section class="day-card" data-date="2026-06-21">
+  <div class="day-head">
+    <div>
+      <div class="date">21.06.2026</div>
+      <div class="weekday">So</div>
+    </div>
+    <div class="day-total" data-field="total">0:00</div>
+  </div>
+
+  <div class="shift">
+    <div class="shift-title">Mittag</div>
+    <label>
+      <span>Start</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="11:30" data-field="m_start" aria-label="Mittag Start 21.06.">
+    </label>
+    <label>
+      <span>Ende</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="15:00" data-field="m_end" aria-label="Mittag Ende 21.06.">
+    </label>
+  </div>
+
+  <div class="shift">
+    <div class="shift-title">Abend</div>
+    <label>
+      <span>Start</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="18:00" data-field="a_start" aria-label="Abend Start 21.06.">
+    </label>
+    <label>
+      <span>Ende</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="23:30" data-field="a_end" aria-label="Abend Ende 21.06.">
+    </label>
+  </div>
+</section>
+
+
+<section class="day-card" data-date="2026-06-22">
+  <div class="day-head">
+    <div>
+      <div class="date">22.06.2026</div>
+      <div class="weekday">Mo</div>
+    </div>
+    <div class="day-total" data-field="total">0:00</div>
+  </div>
+
+  <div class="shift">
+    <div class="shift-title">Mittag</div>
+    <label>
+      <span>Start</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="11:30" data-field="m_start" aria-label="Mittag Start 22.06.">
+    </label>
+    <label>
+      <span>Ende</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="15:00" data-field="m_end" aria-label="Mittag Ende 22.06.">
+    </label>
+  </div>
+
+  <div class="shift">
+    <div class="shift-title">Abend</div>
+    <label>
+      <span>Start</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="18:00" data-field="a_start" aria-label="Abend Start 22.06.">
+    </label>
+    <label>
+      <span>Ende</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="23:30" data-field="a_end" aria-label="Abend Ende 22.06.">
+    </label>
+  </div>
+</section>
+
+
+<section class="day-card" data-date="2026-06-23">
+  <div class="day-head">
+    <div>
+      <div class="date">23.06.2026</div>
+      <div class="weekday">Di</div>
+    </div>
+    <div class="day-total" data-field="total">0:00</div>
+  </div>
+
+  <div class="shift">
+    <div class="shift-title">Mittag</div>
+    <label>
+      <span>Start</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="11:30" data-field="m_start" aria-label="Mittag Start 23.06.">
+    </label>
+    <label>
+      <span>Ende</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="15:00" data-field="m_end" aria-label="Mittag Ende 23.06.">
+    </label>
+  </div>
+
+  <div class="shift">
+    <div class="shift-title">Abend</div>
+    <label>
+      <span>Start</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="18:00" data-field="a_start" aria-label="Abend Start 23.06.">
+    </label>
+    <label>
+      <span>Ende</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="23:30" data-field="a_end" aria-label="Abend Ende 23.06.">
+    </label>
+  </div>
+</section>
+
+
+<section class="day-card" data-date="2026-06-24">
+  <div class="day-head">
+    <div>
+      <div class="date">24.06.2026</div>
+      <div class="weekday">Mi</div>
+    </div>
+    <div class="day-total" data-field="total">0:00</div>
+  </div>
+
+  <div class="shift">
+    <div class="shift-title">Mittag</div>
+    <label>
+      <span>Start</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="11:30" data-field="m_start" aria-label="Mittag Start 24.06.">
+    </label>
+    <label>
+      <span>Ende</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="15:00" data-field="m_end" aria-label="Mittag Ende 24.06.">
+    </label>
+  </div>
+
+  <div class="shift">
+    <div class="shift-title">Abend</div>
+    <label>
+      <span>Start</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="18:00" data-field="a_start" aria-label="Abend Start 24.06.">
+    </label>
+    <label>
+      <span>Ende</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="23:30" data-field="a_end" aria-label="Abend Ende 24.06.">
+    </label>
+  </div>
+</section>
+
+
+<section class="day-card" data-date="2026-06-25">
+  <div class="day-head">
+    <div>
+      <div class="date">25.06.2026</div>
+      <div class="weekday">Do</div>
+    </div>
+    <div class="day-total" data-field="total">0:00</div>
+  </div>
+
+  <div class="shift">
+    <div class="shift-title">Mittag</div>
+    <label>
+      <span>Start</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="11:30" data-field="m_start" aria-label="Mittag Start 25.06.">
+    </label>
+    <label>
+      <span>Ende</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="15:00" data-field="m_end" aria-label="Mittag Ende 25.06.">
+    </label>
+  </div>
+
+  <div class="shift">
+    <div class="shift-title">Abend</div>
+    <label>
+      <span>Start</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="18:00" data-field="a_start" aria-label="Abend Start 25.06.">
+    </label>
+    <label>
+      <span>Ende</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="23:30" data-field="a_end" aria-label="Abend Ende 25.06.">
+    </label>
+  </div>
+</section>
+
+
+<section class="day-card" data-date="2026-06-26">
+  <div class="day-head">
+    <div>
+      <div class="date">26.06.2026</div>
+      <div class="weekday">Fr</div>
+    </div>
+    <div class="day-total" data-field="total">0:00</div>
+  </div>
+
+  <div class="shift">
+    <div class="shift-title">Mittag</div>
+    <label>
+      <span>Start</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="11:30" data-field="m_start" aria-label="Mittag Start 26.06.">
+    </label>
+    <label>
+      <span>Ende</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="15:00" data-field="m_end" aria-label="Mittag Ende 26.06.">
+    </label>
+  </div>
+
+  <div class="shift">
+    <div class="shift-title">Abend</div>
+    <label>
+      <span>Start</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="18:00" data-field="a_start" aria-label="Abend Start 26.06.">
+    </label>
+    <label>
+      <span>Ende</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="23:30" data-field="a_end" aria-label="Abend Ende 26.06.">
+    </label>
+  </div>
+</section>
+
+
+<section class="day-card" data-date="2026-06-27">
+  <div class="day-head">
+    <div>
+      <div class="date">27.06.2026</div>
+      <div class="weekday">Sa</div>
+    </div>
+    <div class="day-total" data-field="total">0:00</div>
+  </div>
+
+  <div class="shift">
+    <div class="shift-title">Mittag</div>
+    <label>
+      <span>Start</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="11:30" data-field="m_start" aria-label="Mittag Start 27.06.">
+    </label>
+    <label>
+      <span>Ende</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="15:00" data-field="m_end" aria-label="Mittag Ende 27.06.">
+    </label>
+  </div>
+
+  <div class="shift">
+    <div class="shift-title">Abend</div>
+    <label>
+      <span>Start</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="18:00" data-field="a_start" aria-label="Abend Start 27.06.">
+    </label>
+    <label>
+      <span>Ende</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="23:30" data-field="a_end" aria-label="Abend Ende 27.06.">
+    </label>
+  </div>
+</section>
+
+
+<section class="day-card" data-date="2026-06-28">
+  <div class="day-head">
+    <div>
+      <div class="date">28.06.2026</div>
+      <div class="weekday">So</div>
+    </div>
+    <div class="day-total" data-field="total">0:00</div>
+  </div>
+
+  <div class="shift">
+    <div class="shift-title">Mittag</div>
+    <label>
+      <span>Start</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="11:30" data-field="m_start" aria-label="Mittag Start 28.06.">
+    </label>
+    <label>
+      <span>Ende</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="15:00" data-field="m_end" aria-label="Mittag Ende 28.06.">
+    </label>
+  </div>
+
+  <div class="shift">
+    <div class="shift-title">Abend</div>
+    <label>
+      <span>Start</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="18:00" data-field="a_start" aria-label="Abend Start 28.06.">
+    </label>
+    <label>
+      <span>Ende</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="23:30" data-field="a_end" aria-label="Abend Ende 28.06.">
+    </label>
+  </div>
+</section>
+
+
+<section class="day-card" data-date="2026-06-29">
+  <div class="day-head">
+    <div>
+      <div class="date">29.06.2026</div>
+      <div class="weekday">Mo</div>
+    </div>
+    <div class="day-total" data-field="total">0:00</div>
+  </div>
+
+  <div class="shift">
+    <div class="shift-title">Mittag</div>
+    <label>
+      <span>Start</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="11:30" data-field="m_start" aria-label="Mittag Start 29.06.">
+    </label>
+    <label>
+      <span>Ende</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="15:00" data-field="m_end" aria-label="Mittag Ende 29.06.">
+    </label>
+  </div>
+
+  <div class="shift">
+    <div class="shift-title">Abend</div>
+    <label>
+      <span>Start</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="18:00" data-field="a_start" aria-label="Abend Start 29.06.">
+    </label>
+    <label>
+      <span>Ende</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="23:30" data-field="a_end" aria-label="Abend Ende 29.06.">
+    </label>
+  </div>
+</section>
+
+
+<section class="day-card" data-date="2026-06-30">
+  <div class="day-head">
+    <div>
+      <div class="date">30.06.2026</div>
+      <div class="weekday">Di</div>
+    </div>
+    <div class="day-total" data-field="total">0:00</div>
+  </div>
+
+  <div class="shift">
+    <div class="shift-title">Mittag</div>
+    <label>
+      <span>Start</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="11:30" data-field="m_start" aria-label="Mittag Start 30.06.">
+    </label>
+    <label>
+      <span>Ende</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="15:00" data-field="m_end" aria-label="Mittag Ende 30.06.">
+    </label>
+  </div>
+
+  <div class="shift">
+    <div class="shift-title">Abend</div>
+    <label>
+      <span>Start</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="18:00" data-field="a_start" aria-label="Abend Start 30.06.">
+    </label>
+    <label>
+      <span>Ende</span>
+      <input inputmode="numeric" pattern="[0-9:]*" placeholder="23:30" data-field="a_end" aria-label="Abend Ende 30.06.">
+    </label>
+  </div>
+</section>
+
+  </section>
+
+  <div class="footer-total">
+    <span>Gesamt Juni 2026</span>
+    <span id="footerTotal">0:00</span>
+  </div>
+</main>
+
+<script>
+const STORAGE_KEY = "goetz_baum_juni_2026_v3_zip_app";
+
+function parseTime(value) {
+  if (!value) return null;
+  value = value.trim().replace(".", ":");
+  if (/^\d{1,2}$/.test(value)) value = value + ":00";
+  if (/^\d{3,4}$/.test(value)) {
+    value = value.padStart(4, "0");
+    value = value.slice(0,2) + ":" + value.slice(2);
+  }
+  const m = value.match(/^(\d{1,2}):(\d{2})$/);
+  if (!m) return null;
+  const h = Number(m[1]), min = Number(m[2]);
+  if (h < 0 || h > 23 || min < 0 || min > 59) return null;
+  return h * 60 + min;
+}
+
+function fmtMinutes(mins) {
+  mins = Math.max(0, Math.round(mins || 0));
+  const h = Math.floor(mins / 60);
+  const m = mins % 60;
+  return h + ":" + String(m).padStart(2, "0");
+}
+
+function duration(start, end) {
+  if (start === null || end === null) return 0;
+  let diff = end - start;
+  if (diff < 0) diff += 24 * 60;
+  return diff;
+}
+
+function normalizeInput(el) {
+  const raw = el.value.trim();
+  const mins = parseTime(raw);
+  if (mins === null) {
+    el.classList.toggle("invalid", raw !== "");
+    return;
+  }
+  el.classList.remove("invalid");
+  el.value = String(Math.floor(mins / 60)).padStart(2, "0") + ":" + String(mins % 60).padStart(2, "0");
+}
+
+function recalc() {
+  let month = 0;
+  let filled = 0;
+  document.querySelectorAll(".day-card").forEach(card => {
+    const get = f => parseTime(card.querySelector(`[data-field="${f}"]`).value);
+    const mStart = get("m_start");
+    const mEnd = get("m_end");
+    const aStart = get("a_start");
+    const aEnd = get("a_end");
+    const total = duration(mStart, mEnd) + duration(aStart, aEnd);
+    card.querySelector('[data-field="total"]').textContent = fmtMinutes(total);
+    month += total;
+
+    const anyInput = Array.from(card.querySelectorAll("input")).some(i => i.value.trim() !== "");
+    if (anyInput) filled += 1;
+  });
+  document.getElementById("monthTotal").textContent = fmtMinutes(month);
+  document.getElementById("footerTotal").textContent = fmtMinutes(month);
+  document.getElementById("filledDays").textContent = filled + " / 30";
+}
+
+function collectData() {
+  const data = {};
+  document.querySelectorAll(".day-card").forEach(card => {
+    const iso = card.dataset.date;
+    data[iso] = {};
+    card.querySelectorAll("input").forEach(input => {
+      data[iso][input.dataset.field] = input.value;
+    });
+  });
+  return data;
+}
+
+function saveData() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(collectData()));
+  recalc();
+  if (typeof event !== "undefined" && event && event.target) {
+    const btn = event.target;
+    const old = btn.textContent;
+    btn.textContent = "Gespeichert ✓";
+    setTimeout(() => btn.textContent = old, 1200);
+  }
+}
+
+function loadData() {
+  const raw = localStorage.getItem(STORAGE_KEY);
+  if (!raw) return;
+  try {
+    const data = JSON.parse(raw);
+    document.querySelectorAll(".day-card").forEach(card => {
+      const iso = card.dataset.date;
+      if (!data[iso]) return;
+      card.querySelectorAll("input").forEach(input => {
+        input.value = data[iso][input.dataset.field] || "";
+      });
+    });
+  } catch(e) {}
+}
+
+function exportCSV() {
+  saveData();
+  const lines = [["Datum","Tag","Mittag Start","Mittag Ende","Abend Start","Abend Ende","Gesamt"]];
+  document.querySelectorAll(".day-card").forEach(card => {
+    const dateText = card.querySelector(".date").textContent.trim();
+    const weekday = card.querySelector(".weekday").textContent.trim();
+    const cells = [
+      dateText,
+      weekday,
+      card.querySelector('[data-field="m_start"]').value,
+      card.querySelector('[data-field="m_end"]').value,
+      card.querySelector('[data-field="a_start"]').value,
+      card.querySelector('[data-field="a_end"]').value,
+      card.querySelector('[data-field="total"]').textContent
+    ];
+    lines.push(cells);
+  });
+  lines.push(["Gesamt","","","","","",document.getElementById("footerTotal").textContent]);
+  const csv = lines.map(r => r.map(v => '"' + String(v).replaceAll('"','""') + '"').join(";")).join("\n");
+  const blob = new Blob([csv], {type:"text/csv;charset=utf-8"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "goetz_baum_arbeitszeiten_juni_2026.csv";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function clearAll() {
+  if (!confirm("Alle eingetragenen Zeiten löschen?")) return;
+  localStorage.removeItem(STORAGE_KEY);
+  document.querySelectorAll("input").forEach(i => {
+    i.value = "";
+    i.classList.remove("invalid");
+  });
+  recalc();
+}
+
+document.querySelectorAll("input").forEach(input => {
+  input.addEventListener("blur", () => { normalizeInput(input); saveData(); });
+  input.addEventListener("input", () => {
+    input.classList.remove("invalid");
+    recalc();
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(collectData()));
+  });
+});
+
+loadData();
+recalc();
+</script>
+</body>
+</html>
